@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic;
+package com.example.tobbyspring.basic.step3;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

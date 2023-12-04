@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic;
+package com.example.tobbyspring.basic.step2;
 
 import com.example.tobbyspring.entity.User;
 
