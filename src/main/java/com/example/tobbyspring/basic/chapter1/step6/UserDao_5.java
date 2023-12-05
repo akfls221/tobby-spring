@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.step4;
+package com.example.tobbyspring.basic.chapter1.step6;
 
 import com.example.tobbyspring.entity.User;
 
@@ -7,15 +7,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao_3 {
-    private SimpleConnectionMaker simpleConnectionMaker;
+public class UserDao_5 {
+    private ConnectionMaker connectionMaker;
 
-    public UserDao_3() {
-        this.simpleConnectionMaker = new SimpleConnectionMaker();
+    public UserDao_5(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
     }
 
     public void add(User user) throws SQLException, ClassNotFoundException {
-        Connection connection = simpleConnectionMaker.getConnection();
+        Connection connection = connectionMaker.makeConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
@@ -30,7 +30,7 @@ public class UserDao_3 {
     }
 
     public User get(String id) throws SQLException, ClassNotFoundException {
-        Connection connection = simpleConnectionMaker.getConnection();
+        Connection connection = connectionMaker.makeConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = ?");
 

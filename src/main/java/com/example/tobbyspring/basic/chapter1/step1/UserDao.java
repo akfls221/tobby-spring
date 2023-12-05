@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.step2;
+package com.example.tobbyspring.basic.chapter1.step1;
 
 import com.example.tobbyspring.entity.User;
 
@@ -8,10 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao_1 {
+public class UserDao {
 
     public void add(User user) throws SQLException, ClassNotFoundException {
-        Connection connection = getConnection();
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tobby", "root", "dobbyMaster");
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
@@ -26,7 +27,8 @@ public class UserDao_1 {
     }
 
     public User get(String id) throws SQLException, ClassNotFoundException {
-        Connection connection = getConnection();
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tobby", "root", "dobbyMaster");
 
         PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = ?");
 
@@ -45,10 +47,5 @@ public class UserDao_1 {
         connection.close();
 
         return findUser;
-    }
-
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/tobby", "root", "dobbyMaster");
     }
 }

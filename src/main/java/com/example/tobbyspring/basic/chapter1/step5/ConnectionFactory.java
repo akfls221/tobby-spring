@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.step5;
+package com.example.tobbyspring.basic.chapter1.step5;
 
 public class ConnectionFactory {
 

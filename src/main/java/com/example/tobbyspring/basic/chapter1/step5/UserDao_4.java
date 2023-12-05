@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.step6;
+package com.example.tobbyspring.basic.chapter1.step5;
 
 import com.example.tobbyspring.entity.User;
 
@@ -7,10 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao_5 {
+public class UserDao_4 {
     private ConnectionMaker connectionMaker;
 
-    public UserDao_5(ConnectionMaker connectionMaker) {
+    public UserDao_4(ConnectionMaker connectionMaker) {
         this.connectionMaker = connectionMaker;
     }
 

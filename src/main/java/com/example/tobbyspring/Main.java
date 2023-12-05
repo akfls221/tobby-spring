@@ -1,6 +1,6 @@
 package com.example.tobbyspring;
 
-import com.example.tobbyspring.basic.step1.UserDao;
+import com.example.tobbyspring.basic.chapter1.step1.UserDao;
 import com.example.tobbyspring.entity.User;
 
 import java.sql.SQLException;
