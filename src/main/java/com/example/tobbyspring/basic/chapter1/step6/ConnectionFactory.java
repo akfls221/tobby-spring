@@ -3,7 +3,7 @@ package com.example.tobbyspring.basic.chapter1.step6;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class ConnectionFactory {
 
     @Bean
