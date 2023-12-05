@@ -13,7 +13,7 @@ public abstract class UserDao_2 {
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
-        preparedStatement.setString(1, user.getId());
+        preparedStatement.setLong(1, user.getId());
         preparedStatement.setString(2, user.getName());
         preparedStatement.setString(3, user.getPassword());
 
@@ -34,7 +34,7 @@ public abstract class UserDao_2 {
         resultSet.next();
 
         User findUser = new User();
-        findUser.setId(resultSet.getString("id"));
+        findUser.setId(resultSet.getLong("id"));
         findUser.setName(resultSet.getString("name"));
         findUser.setPassword(resultSet.getString("password"));
 

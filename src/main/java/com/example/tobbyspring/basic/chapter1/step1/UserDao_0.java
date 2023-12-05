@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDao {
+public class UserDao_0 {
 
     public void add(User user) throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -16,7 +16,7 @@ public class UserDao {
 
         PreparedStatement preparedStatement = connection.prepareStatement("insert into users(id, name, password) values(?,?,?)");
 
-        preparedStatement.setString(1, user.getId());
+        preparedStatement.setLong(1, user.getId());
         preparedStatement.setString(2, user.getName());
         preparedStatement.setString(3, user.getPassword());
 
@@ -38,7 +38,7 @@ public class UserDao {
         resultSet.next();
 
         User findUser = new User();
-        findUser.setId(resultSet.getString("id"));
+        findUser.setId(resultSet.getLong("id"));
         findUser.setName(resultSet.getString("name"));
         findUser.setPassword(resultSet.getString("password"));
 
