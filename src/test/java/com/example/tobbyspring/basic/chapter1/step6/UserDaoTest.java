@@ -10,6 +10,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserDaoTest {
-
+//https://spring.io/blog/2023/06/23/improved-testcontainers-support-in-spring-boot-3-1
+    //https://spring.io/blog/2023/06/19/spring-boot-31-connectiondetails-abstraction
 
 }
