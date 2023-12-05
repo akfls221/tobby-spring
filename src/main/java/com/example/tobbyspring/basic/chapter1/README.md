@@ -31,3 +31,8 @@
 - @Configuration @Bean을 사용하여 스프링에서 제공하는 Ioc/DI 컨테이너를 활용한다.
 - 기존의 NConnectionMaker에서 기능이 추가된 ConnectionMaker를 추가하여 등록도 가능하다.
 - 클래스 모델이나 코드에서는 런타임 시점의 의존관계가 드러나지 않아야 하며, 이를 위해선 Interface로 설정해야 한다.
+
+# DataSource 인터페이스로 변환
+- ConnectionMaker와 같은 인터페이스를 만들어 쓸 일은 없다. dataSource 인터페이스를 통해 설정이 가능하며, 기존엔 xml로 설정을 진행했지만
+  이제는 yml 파일을 통해 자동설정이 가능하다.
+- 지금부터는 mysql이 아닌 embaddedH2를 통해 DB를 가져갈 예정이다.
