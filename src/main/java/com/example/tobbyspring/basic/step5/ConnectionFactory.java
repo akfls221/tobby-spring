@@ -2,6 +2,8 @@ package com.example.tobbyspring.basic.step5;
 
 public class ConnectionFactory {
 
+    public UserDao_4 userDao = new UserDao_4(nUserConnection());
+
     public ConnectionMaker nUserConnection() {
         return new NConnectionMaker();
     }
