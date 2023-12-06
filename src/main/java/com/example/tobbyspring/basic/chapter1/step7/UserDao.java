@@ -1,7 +1,6 @@
 package com.example.tobbyspring.basic.chapter1.step7;
 
 import com.example.tobbyspring.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
