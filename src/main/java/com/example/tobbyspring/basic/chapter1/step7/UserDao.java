@@ -33,12 +33,12 @@ public class UserDao {
         connection.close();
     }
 
-    public User get(String id) throws SQLException {
+    public User get(Long id) throws SQLException {
         Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = connection.prepareStatement("select * from users where id = ?");
 
-        preparedStatement.setString(1, id);
+        preparedStatement.setLong(1, id);
 
         ResultSet resultSet = preparedStatement.executeQuery();
         resultSet.next();
@@ -55,6 +55,23 @@ public class UserDao {
         return findUser;
     }
 
+    public int update(User user) throws SQLException {
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("update users set name = ?, password = ? where id = ?");
+
+        preparedStatement.setString(1, user.getName());
+        preparedStatement.setString(2, user.getPassword());
+        preparedStatement.setLong(3, user.getId());
+
+        int result = preparedStatement.executeUpdate();
+
+        preparedStatement.close();
+        connection.close();
+
+        return result;
+    }
+
     public int userCount() throws SQLException {
         Connection connection = dataSource.getConnection();
 
@@ -69,5 +86,16 @@ public class UserDao {
         connection.close();
 
         return result;
+    }
+
+    public void deleteAll() throws SQLException {
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("delete from users");
+
+        preparedStatement.executeUpdate();
+
+        preparedStatement.close();
+        connection.close();
     }
 }
