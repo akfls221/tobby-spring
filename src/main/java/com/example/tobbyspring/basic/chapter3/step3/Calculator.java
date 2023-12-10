@@ -19,6 +19,20 @@ public class Calculator {
                 });
     }
 
+    public int calcMultiply(String patch) throws IOException {
+        return this.template(patch,
+                bufferedReader -> {
+                    int multiply = 1;
+                    String line;
+
+                    while ((line = bufferedReader.readLine()) != null) {
+                        multiply *= Integer.valueOf(line);
+                    }
+
+                    return multiply;
+                });
+    }
+
     private int template(String path, Strategy strategy) throws IOException {
         BufferedReader bufferedReader = null;
         try {

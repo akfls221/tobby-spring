@@ -17,4 +17,11 @@ class CalculatorTest {
         assertThat(actual).isEqualTo(10);
     }
 
+    @Test
+    void multiplyOfNumbers() throws IOException {
+        Calculator calculator = new Calculator();
+        int actual = calculator.calcMultiply(getClass().getResource("/numbers.txt").getPath());
+
+        assertThat(actual).isEqualTo(24);
+    }
 }
