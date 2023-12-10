@@ -1,6 +1,6 @@
-package com.example.tobbyspring.basic.cahpter3.step3;
+package com.example.tobbyspring.basic.cahpter3.step4;
 
-import com.example.tobbyspring.basic.chapter3.step3.Calculator_1;
+import com.example.tobbyspring.basic.chapter3.step4.Calculator;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,7 +11,7 @@ class CalculatorTest {
 
     @Test
     void sumOfNumbers() throws IOException {
-        Calculator_1 calculator = new Calculator_1();
+        Calculator calculator = new Calculator();
         int actual = calculator.calcSum(getClass().getResource("/numbers.txt").getPath());
 
         assertThat(actual).isEqualTo(10);
@@ -19,9 +19,10 @@ class CalculatorTest {
 
     @Test
     void multiplyOfNumbers() throws IOException {
-        Calculator_1 calculator = new Calculator_1();
+        Calculator calculator = new Calculator();
         int actual = calculator.calcMultiply(getClass().getResource("/numbers.txt").getPath());
 
         assertThat(actual).isEqualTo(24);
     }
+
 }

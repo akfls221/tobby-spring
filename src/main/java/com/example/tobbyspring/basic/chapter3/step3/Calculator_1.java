@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Calculator {
+public class Calculator_1 {
     public int calcSum(String path) throws IOException {
         return this.template(path,
                 bufferedReader -> {
