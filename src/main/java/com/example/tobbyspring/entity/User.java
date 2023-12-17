@@ -16,6 +16,18 @@ public class User {
     int login;
     int recommend;
 
+    public User(Long id, String name, String password, Level level, int login, int recommend) {
+        this.id = id;
+        this.name = name;
+        this.password = password;
+        this.level = level;
+        this.login = login;
+        this.recommend = recommend;
+    }
+
+    public User() {
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

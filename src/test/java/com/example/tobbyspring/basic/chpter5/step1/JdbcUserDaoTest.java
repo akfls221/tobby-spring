@@ -1,5 +1,6 @@
 package com.example.tobbyspring.basic.chpter5.step1;
 
+import com.example.tobbyspring.entity.Level;
 import com.example.tobbyspring.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,7 +56,10 @@ class JdbcUserDaoTest {
 
         assertAll(
                 () -> assertThat(testUser.getName()).isEqualTo(actual.getName()),
-                () -> assertThat(testUser.getPassword()).isEqualTo(actual.getPassword())
+                () -> assertThat(testUser.getPassword()).isEqualTo(actual.getPassword()),
+                () -> assertThat(testUser.getLevel()).isEqualTo(actual.getLevel()),
+                () -> assertThat(testUser.getLogin()).isEqualTo(actual.getLogin()),
+                () -> assertThat(testUser.getRecommend()).isEqualTo(actual.getRecommend())
         );
     }
 
@@ -63,6 +67,9 @@ class JdbcUserDaoTest {
         User user = new User();
         user.setName("엄태권");
         user.setPassword("3345");
+        user.setLevel(Level.BASIC);
+        user.setLogin(1);
+        user.setRecommend(0);
         return user;
     }
 
