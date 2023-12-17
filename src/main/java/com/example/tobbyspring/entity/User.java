@@ -12,6 +12,7 @@ public class User {
     private Long id;
     private String name;
     private String password;
+    private Level level;
 
     @Override
     public boolean equals(Object o) {
