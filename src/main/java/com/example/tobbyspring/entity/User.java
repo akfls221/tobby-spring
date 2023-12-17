@@ -13,6 +13,8 @@ public class User {
     private String name;
     private String password;
     private Level level;
+    int login;
+    int recommend;
 
     @Override
     public boolean equals(Object o) {
