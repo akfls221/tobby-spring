@@ -28,6 +28,14 @@ public class User {
     public User() {
     }
 
+    public void upgradeLevel() {
+        if (this.level.nextLevel() == null) {
+            throw new IllegalArgumentException("현재 레벨은 업그레이드 할 수 없는 레벨 입니다. currenLevel : " + this.level);
+        }
+
+        this.level = this.level.nextLevel();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
