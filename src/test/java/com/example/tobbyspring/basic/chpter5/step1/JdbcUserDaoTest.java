@@ -63,6 +63,26 @@ class JdbcUserDaoTest {
         );
     }
 
+    @Test
+    void update() {
+        User testUser = createTestUser();
+
+        jdbcUserDao.add(testUser);
+
+        User findUser = jdbcUserDao.get(1L);
+
+        findUser.setName("change");
+        findUser.setPassword("changePassword");
+        findUser.setLevel(Level.GOLD);
+        findUser.setLogin(3);
+        findUser.setRecommend(999);
+        jdbcUserDao.update(findUser);
+
+        User updateUser = jdbcUserDao.get(findUser.getId());
+
+        assertThat(findUser).isEqualTo(updateUser);
+    }
+
     private User createTestUser() {
         User user = new User();
         user.setName("엄태권");
