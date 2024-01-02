@@ -5,6 +5,7 @@ import com.example.tobbyspring.entity.Level;
 import com.example.tobbyspring.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ import java.util.List;
 public class UserService {
 
     private final UserDao userDao;
+    private final PlatformTransactionManager platformTransactionManager;
+
 
     public void upgradeLevels() {
         List<User> users = userDao.getAll();
