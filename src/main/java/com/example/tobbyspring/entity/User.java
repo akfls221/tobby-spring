@@ -25,6 +25,14 @@ public class User {
         this.recommend = recommend;
     }
 
+    public User(String name, String password, Level level, int login, int recommend) {
+        this.name = name;
+        this.password = password;
+        this.level = level;
+        this.login = login;
+        this.recommend = recommend;
+    }
+
     public User() {
     }
 
