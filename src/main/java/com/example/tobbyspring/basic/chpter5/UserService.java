@@ -6,6 +6,8 @@ import com.example.tobbyspring.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
@@ -18,13 +20,21 @@ public class UserService {
 
 
     public void upgradeLevels() {
-        List<User> users = userDao.getAll();
+        TransactionStatus transaction = this.platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+        try {
+            List<User> users = userDao.getAll();
 
-        for (User user : users) {
-            if (canUpgradeLevel(user)) {
-                user.upgradeLevel();
-                userDao.update(user);
+            for (User user : users) {
+                if (canUpgradeLevel(user)) {
+                    user.upgradeLevel();
+                    userDao.update(user);
+                }
             }
+
+            this.platformTransactionManager.commit(transaction);
+        } catch (RuntimeException e) {
+            this.platformTransactionManager.rollback(transaction);
+            throw e;
         }
     }
 
