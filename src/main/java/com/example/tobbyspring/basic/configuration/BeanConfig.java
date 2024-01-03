@@ -53,6 +53,6 @@ public class BeanConfig {
 
     @Bean
     public Chapter6ServiceImpl chapter6ServiceImpl() {
-        return new Chapter6ServiceImpl(userDao(), mailSender());
+        return new Chapter6ServiceImpl(userDao());
     }
 }
