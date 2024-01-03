@@ -10,11 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class UserDao {
+public class Chapter1UserDao {
 
     private final DataSource dataSource;
 
-    public UserDao(DataSource dataSource) {
+    public Chapter1UserDao(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
