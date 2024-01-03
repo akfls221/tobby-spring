@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-class JdbcUserDaoTest {
+class JdbcChapter1UserDaoTest {
 
     @Autowired
     JdbcUserDao jdbcUserDao;

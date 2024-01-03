@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-class UserDaoTest {
+class Chapter1UserDaoTest {
 
     @Autowired
-    private UserDao userDao;
+    private Chapter1UserDao userDao;
 
     @BeforeEach
     void setUp() throws SQLException {
