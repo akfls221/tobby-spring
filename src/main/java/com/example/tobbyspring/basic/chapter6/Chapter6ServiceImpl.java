@@ -6,11 +6,9 @@ import com.example.tobbyspring.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class Chapter6ServiceImpl implements Chapter6Service{
 
