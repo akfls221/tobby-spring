@@ -4,16 +4,23 @@ import com.example.tobbyspring.basic.chpter5.step1.UserDao;
 import com.example.tobbyspring.entity.Level;
 import com.example.tobbyspring.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 public class Chapter6ServiceImpl implements Chapter6Service{
 
     private final UserDao userDao;
-    private final MailSender mailSender;
+    private MailSender mailSender;
+
+    @Autowired
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Override
     public void add(User user) {
@@ -25,11 +32,15 @@ public class Chapter6ServiceImpl implements Chapter6Service{
         List<User> users = userDao.getAll();
 
         for (User user : users) {
-            if (canUpgradeLevel(user)) {
-                user.upgradeLevel();
-                userDao.update(user);
-                sendUpgradeEmail(user);
-            }
+            upgradeLevel(user);
+        }
+    }
+
+    protected void upgradeLevel(User user) {
+        if (canUpgradeLevel(user)) {
+            user.upgradeLevel();
+            userDao.update(user);
+            sendUpgradeEmail(user);
         }
     }
 
@@ -52,4 +63,23 @@ public class Chapter6ServiceImpl implements Chapter6Service{
             case SILVER -> user.getRecommend() >= 30;
         };
     }
+
+    public static class ExceptionTestService extends Chapter6ServiceImpl {
+
+        private Long id;
+
+        public ExceptionTestService(UserDao userDao, Long id) {
+            super(userDao);
+            this.id = id;
+        }
+
+        @Override
+        protected void upgradeLevel(User user) {
+            if (Objects.equals(user.getId(), this.id)) {
+                throw new IllegalArgumentException("error");
+            }
+            super.upgradeLevel(user);
+        }
+    }
+
 }
