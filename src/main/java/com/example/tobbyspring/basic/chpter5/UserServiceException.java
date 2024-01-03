@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic;
+package com.example.tobbyspring.basic.chpter5;
 
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
 import com.example.tobbyspring.entity.Level;
