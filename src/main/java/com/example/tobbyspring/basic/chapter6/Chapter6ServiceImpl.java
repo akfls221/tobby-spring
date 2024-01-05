@@ -82,4 +82,36 @@ public class Chapter6ServiceImpl implements Chapter6Service{
         }
     }
 
+    public static class MockUserDao implements UserDao {
+
+        @Override
+        public List<User> getAll() {
+            return null;
+        }
+
+        @Override
+        public void update(User user) {
+
+        }
+
+        @Override
+        public void add(User user) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public User get(Long id) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void deleteAll() {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public int getCount() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }
