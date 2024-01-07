@@ -19,6 +19,10 @@ public class TxProxyFactoryBean implements FactoryBean {
         this.serviceInterface = serviceInterface;
     }
 
+    public void setTarget(Object target) {
+        this.target = target;
+    }
+
     @Override
     public Object getObject() {
         TransactionHandler transactionHandler = new TransactionHandler(this.target, this.transactionManager, this.pattern);
