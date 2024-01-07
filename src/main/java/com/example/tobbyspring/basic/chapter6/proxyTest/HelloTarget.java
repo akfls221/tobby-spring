@@ -1,6 +1,8 @@
 package com.example.tobbyspring.basic.chapter6.proxyTest;
 
-public class HelloTarget implements Hello{
+import com.example.tobbyspring.basic.chapter6.Hello;
+
+public class HelloTarget implements Hello {
 
     @Override
     public String sayHello(String name) {

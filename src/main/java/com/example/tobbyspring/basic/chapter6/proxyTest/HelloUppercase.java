@@ -1,6 +1,8 @@
 package com.example.tobbyspring.basic.chapter6.proxyTest;
 
-public class HelloUppercase implements Hello{
+import com.example.tobbyspring.basic.chapter6.Hello;
+
+public class HelloUppercase implements Hello {
 
     private Hello hello;
 
