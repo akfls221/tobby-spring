@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.cahpter3.chapter6;
+package com.example.tobbyspring.basic.chapter6;
 
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceImpl;
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceTxImpl;

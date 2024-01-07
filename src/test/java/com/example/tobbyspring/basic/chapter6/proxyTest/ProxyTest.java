@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.cahpter3.chapter6.proxyTest;
+package com.example.tobbyspring.basic.chapter6.proxyTest;
 
 import com.example.tobbyspring.basic.chapter6.Hello;
 import com.example.tobbyspring.basic.chapter6.dynamicproxy.UppercaseHandler;
