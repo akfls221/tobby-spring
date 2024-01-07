@@ -75,6 +75,11 @@ public class Chapter6ServiceImpl implements Chapter6Service{
         }
 
         @Override
+        public void setMailSender(MailSender mailSender) {
+            super.setMailSender(mailSender);
+        }
+
+        @Override
         protected void upgradeLevel(User user) {
             if (Objects.equals(user.getId(), this.id)) {
                 throw new IllegalArgumentException("error");
