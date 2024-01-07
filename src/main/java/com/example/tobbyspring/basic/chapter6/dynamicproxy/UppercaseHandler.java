@@ -16,7 +16,7 @@ public class UppercaseHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         Object result = method.invoke(target, args);
 
-        if (result instanceof String stringTypeResult) {
+        if (result instanceof String stringTypeResult && method.getName().startsWith("say")) {
             return stringTypeResult.toUpperCase();
         }
 
