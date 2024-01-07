@@ -57,7 +57,7 @@ public class BeanConfig {
         return new Chapter6ServiceImpl(userDao());
     }
 
-    @Bean
+    @Bean(name = "userService2")
     public TxProxyFactoryBean txProxyFactoryBean() {
         return new TxProxyFactoryBean(chapter6ServiceImpl(), platformTransactionManager(), "upgradeLevels", Chapter6Service.class);
     }
