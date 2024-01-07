@@ -3,6 +3,7 @@ package com.example.tobbyspring.basic.configuration;
 import com.example.tobbyspring.basic.chapter6.Chapter6Service;
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceImpl;
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceTxImpl;
+import com.example.tobbyspring.basic.chapter6.transactionproxy.TxProxyFactoryBean;
 import com.example.tobbyspring.basic.chpter5.MockMailSender;
 import com.example.tobbyspring.basic.chpter5.step1.JdbcUserDao;
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
@@ -54,5 +55,10 @@ public class BeanConfig {
     @Bean
     public Chapter6ServiceImpl chapter6ServiceImpl() {
         return new Chapter6ServiceImpl(userDao());
+    }
+
+    @Bean
+    public TxProxyFactoryBean txProxyFactoryBean() {
+        return new TxProxyFactoryBean(chapter6ServiceImpl(), platformTransactionManager(), "upgradeLevels", Chapter6Service.class);
     }
 }
