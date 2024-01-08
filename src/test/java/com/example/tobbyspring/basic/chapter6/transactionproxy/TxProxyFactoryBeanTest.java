@@ -7,6 +7,7 @@ import com.example.tobbyspring.entity.Level;
 import com.example.tobbyspring.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -47,6 +48,25 @@ class TxProxyFactoryBeanTest {
         txProxyFactoryBean.setTarget(target);
 
         Chapter6Service userService = (Chapter6Service) txProxyFactoryBean.getObject();
+
+        assertThatThrownBy(userService::upgradeLevels)
+                .isInstanceOf(RuntimeException.class);
+
+        assertThat(userDao.getAll())
+                .extracting(User::getLevel)
+                .containsOnly(Level.BASIC);
+    }
+
+    @Test
+    @DirtiesContext
+    void proxyFactoryBeanTest() {
+        Chapter6ServiceImpl.ExceptionTestService target = new Chapter6ServiceImpl.ExceptionTestService(this.userDao, 2L);
+        target.setMailSender(this.mailSender);
+
+        ProxyFactoryBean proxyFactoryBean = this.context.getBean("&userServiceWithAdvisor", ProxyFactoryBean.class);
+        proxyFactoryBean.setTarget(target);
+
+        Chapter6Service userService = (Chapter6Service) proxyFactoryBean.getObject();
 
         assertThatThrownBy(userService::upgradeLevels)
                 .isInstanceOf(RuntimeException.class);
