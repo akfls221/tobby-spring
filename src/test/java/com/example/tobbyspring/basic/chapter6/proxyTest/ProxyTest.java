@@ -2,9 +2,10 @@ package com.example.tobbyspring.basic.chapter6.proxyTest;
 
 import com.example.tobbyspring.basic.chapter6.Hello;
 import com.example.tobbyspring.basic.chapter6.dynamicproxy.UppercaseHandler;
-import com.example.tobbyspring.basic.chapter6.proxyTest.HelloTarget;
-import com.example.tobbyspring.basic.chapter6.proxyTest.HelloUppercase;
+import org.aopalliance.intercept.MethodInterceptor;
+import org.aopalliance.intercept.MethodInvocation;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.framework.ProxyFactoryBean;
 
 import java.lang.reflect.Proxy;
 
@@ -49,4 +50,28 @@ class ProxyTest {
                 () -> assertThat(proxyHello.sayThankYou("owen")).isEqualTo("THANKYOU OWEN")
         );
     }
+
+    @Test
+    void proxyFactoryBeanTest() {
+        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+        proxyFactoryBean.setTarget(new HelloTarget());
+        proxyFactoryBean.addAdvice(new UpperCaseAdvice());
+
+        Hello hello = (Hello) proxyFactoryBean.getObject();
+
+        assertAll(
+                () -> assertThat(hello.sayHello("owen")).isEqualTo("HELLO OWEN"),
+                () -> assertThat(hello.sayHi("owen")).isEqualTo("HI OWEN"),
+                () -> assertThat(hello.sayThankYou("owen")).isEqualTo("THANKYOU OWEN")
+        );
+    }
+
+    static class UpperCaseAdvice implements MethodInterceptor {
+        @Override
+        public Object invoke(MethodInvocation invocation) throws Throwable {
+            String ret = (String) invocation.proceed();
+            return ret.toUpperCase();
+        }
+    }
+
 }
