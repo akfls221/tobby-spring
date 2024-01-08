@@ -8,6 +8,8 @@ import com.example.tobbyspring.basic.chapter6.transactionproxy.TxProxyFactoryBea
 import com.example.tobbyspring.basic.chpter5.MockMailSender;
 import com.example.tobbyspring.basic.chpter5.step1.JdbcUserDao;
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
+import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -75,5 +77,19 @@ public class BeanConfig {
         nameMatchMethodPointcut.setMappedName("upgrade*");
 
         return nameMatchMethodPointcut;
+    }
+
+    @Bean
+    public DefaultPointcutAdvisor defaultPointcutAdvisor() {
+        return new DefaultPointcutAdvisor(nameMatchMethodPointcut(), transactionAdvice());
+    }
+
+    @Bean(name = "userServiceWithAdvisor")
+    public ProxyFactoryBean proxyFactoryBean() {
+        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+        proxyFactoryBean.setTarget(chapter6ServiceImpl());
+        proxyFactoryBean.setInterceptorNames("defaultPointcutAdvisor");
+
+        return proxyFactoryBean;
     }
 }
