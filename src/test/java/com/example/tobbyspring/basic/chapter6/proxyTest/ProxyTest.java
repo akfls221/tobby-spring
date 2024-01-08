@@ -6,6 +6,8 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 import java.lang.reflect.Proxy;
 
@@ -66,6 +68,25 @@ class ProxyTest {
         );
     }
 
+    @Test
+    void pointcutAdvisorTest() {
+        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+        proxyFactoryBean.setTarget(new HelloTarget());
+
+        NameMatchMethodPointcut nameMatchMethodPointcut = new NameMatchMethodPointcut();
+        nameMatchMethodPointcut.setMappedName("sayH*");
+
+        proxyFactoryBean.addAdvisor(new DefaultPointcutAdvisor(nameMatchMethodPointcut, new UpperCaseAdvice()));
+
+        Hello hello = (Hello) proxyFactoryBean.getObject();
+
+        assertAll(
+                () -> assertThat(hello.sayHello("owen")).isEqualTo("HELLO OWEN"),
+                () -> assertThat(hello.sayHi("owen")).isEqualTo("HI OWEN"),
+                () -> assertThat(hello.sayThankYou("owen")).isEqualTo("ThankYou owen")
+        );
+    }
+
     static class UpperCaseAdvice implements MethodInterceptor {
         @Override
         public Object invoke(MethodInvocation invocation) throws Throwable {
@@ -73,5 +94,4 @@ class ProxyTest {
             return ret.toUpperCase();
         }
     }
-
 }
