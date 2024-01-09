@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.lang.reflect.Proxy;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -54,6 +56,8 @@ class Chapter6UserServiceExceptionTest {
         assertThat(userDao.getAll())
                 .extracting(User::getLevel)
                 .containsOnly(Level.BASIC);
+
+        assertThat(this.exceptionService).isInstanceOf(Proxy.class);
     }
 
 }
