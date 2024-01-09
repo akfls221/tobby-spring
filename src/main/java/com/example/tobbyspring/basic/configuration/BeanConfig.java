@@ -2,14 +2,11 @@ package com.example.tobbyspring.basic.configuration;
 
 import com.example.tobbyspring.basic.chapter6.Chapter6Service;
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceImpl;
-import com.example.tobbyspring.basic.chapter6.Chapter6ServiceTxImpl;
 import com.example.tobbyspring.basic.chapter6.pointcut.NameMatchClassMethodPointcut;
 import com.example.tobbyspring.basic.chapter6.transactionproxy.TransactionAdvice;
-import com.example.tobbyspring.basic.chapter6.transactionproxy.TxProxyFactoryBean;
 import com.example.tobbyspring.basic.chpter5.MockMailSender;
 import com.example.tobbyspring.basic.chpter5.step1.JdbcUserDao;
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
-import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
@@ -53,23 +50,31 @@ public class BeanConfig {
         return new MockMailSender();
     }
 
-    @Bean
-    public Chapter6Service chapter6Service() {
-        return new Chapter6ServiceTxImpl(chapter6ServiceImpl(), platformTransactionManager());
-    }
+//    @Bean
+//    public Chapter6Service chapter6Service() {
+//        return new Chapter6ServiceTxImpl(chapter6ServiceImpl(), platformTransactionManager());
+//    }
 
     @Bean
-    public Chapter6ServiceImpl chapter6ServiceImpl() {
-        return new Chapter6ServiceImpl(userDao());
+    public Chapter6Service chapter6ServiceImpl() {
+        Chapter6ServiceImpl chapter6Service = new Chapter6ServiceImpl(userDao());
+        chapter6Service.setMailSender(mailSender());
+        return chapter6Service;
     }
 
-    @Bean(name = "userService2")
-    public TxProxyFactoryBean txProxyFactoryBean() {
-        return new TxProxyFactoryBean(chapter6ServiceImpl(), platformTransactionManager(), "upgradeLevels", Chapter6Service.class);
+    @Bean(name = "exceptionService")
+    public Chapter6Service exceptionTestService() {
+        return new Chapter6ServiceImpl.ExceptionTestServiceImpl(userDao());
     }
+
+//    @Bean(name = "userService2")
+//    public TxProxyFactoryBean txProxyFactoryBean() {
+//        return new TxProxyFactoryBean(chapter6ServiceImpl(), platformTransactionManager(), "upgradeLevels", Chapter6Service.class);
+//    }
 
     @Bean
     public TransactionAdvice transactionAdvice() {
+
         return new TransactionAdvice(platformTransactionManager());
     }
 
@@ -91,14 +96,14 @@ public class BeanConfig {
         return new DefaultPointcutAdvisor(nameMatchMethodPointcut(), transactionAdvice());
     }
 
-    @Bean(name = "userServiceWithAdvisor")
-    public ProxyFactoryBean proxyFactoryBean() {
-        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
-        proxyFactoryBean.setTarget(chapter6ServiceImpl());
-        proxyFactoryBean.setInterceptorNames("defaultPointcutAdvisor");
-
-        return proxyFactoryBean;
-    }
+//    @Bean(name = "userServiceWithAdvisor")
+//    public ProxyFactoryBean proxyFactoryBean() {
+//        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+//        proxyFactoryBean.setTarget(chapter6ServiceImpl());
+//        proxyFactoryBean.setInterceptorNames("defaultPointcutAdvisor");
+//
+//        return proxyFactoryBean;
+//    }
 
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
