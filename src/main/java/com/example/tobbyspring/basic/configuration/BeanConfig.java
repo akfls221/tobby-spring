@@ -9,6 +9,7 @@ import com.example.tobbyspring.basic.chpter5.MockMailSender;
 import com.example.tobbyspring.basic.chpter5.step1.JdbcUserDao;
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
 import org.springframework.aop.framework.ProxyFactoryBean;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -91,5 +92,10 @@ public class BeanConfig {
         proxyFactoryBean.setInterceptorNames("defaultPointcutAdvisor");
 
         return proxyFactoryBean;
+    }
+
+    @Bean
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        return new DefaultAdvisorAutoProxyCreator();
     }
 }
