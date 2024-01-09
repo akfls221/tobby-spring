@@ -43,7 +43,7 @@ class TransactionHandlerTest {
 
     @Test
     void upgradeLevel() {
-        Chapter6ServiceImpl.ExceptionTestService target = new Chapter6ServiceImpl.ExceptionTestService(this.userDao, 2L);
+        Chapter6ServiceImpl.ExceptionTestServiceImpl target = new Chapter6ServiceImpl.ExceptionTestServiceImpl(this.userDao, 2L);
         target.setMailSender(this.mailSender);
         TransactionHandler proxyObject = new TransactionHandler(target, this.platformTransactionManager, "upgradeLevels");
 

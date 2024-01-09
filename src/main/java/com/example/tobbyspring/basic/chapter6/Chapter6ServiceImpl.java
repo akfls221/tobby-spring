@@ -65,13 +65,17 @@ public class Chapter6ServiceImpl implements Chapter6Service{
         };
     }
 
-    public static class ExceptionTestService extends Chapter6ServiceImpl {
+    public static class ExceptionTestServiceImpl extends Chapter6ServiceImpl {
 
-        private Long id;
+        private Long id = 3L;
 
-        public ExceptionTestService(UserDao userDao, Long id) {
+        public ExceptionTestServiceImpl(UserDao userDao, Long id) {
             super(userDao);
             this.id = id;
+        }
+
+        public ExceptionTestServiceImpl(UserDao userDao) {
+            super(userDao);
         }
 
         @Override

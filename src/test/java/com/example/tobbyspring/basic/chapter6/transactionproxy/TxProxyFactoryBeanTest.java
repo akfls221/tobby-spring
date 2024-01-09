@@ -41,7 +41,7 @@ class TxProxyFactoryBeanTest {
     @Test
     @DirtiesContext
     void upgradeAllOrNothing() {
-        Chapter6ServiceImpl.ExceptionTestService target = new Chapter6ServiceImpl.ExceptionTestService(this.userDao, 2L);
+        Chapter6ServiceImpl.ExceptionTestServiceImpl target = new Chapter6ServiceImpl.ExceptionTestServiceImpl(this.userDao, 2L);
         target.setMailSender(this.mailSender);
 
         TxProxyFactoryBean txProxyFactoryBean = this.context.getBean("&userService2", TxProxyFactoryBean.class);
@@ -60,7 +60,7 @@ class TxProxyFactoryBeanTest {
     @Test
     @DirtiesContext
     void proxyFactoryBeanTest() {
-        Chapter6ServiceImpl.ExceptionTestService target = new Chapter6ServiceImpl.ExceptionTestService(this.userDao, 2L);
+        Chapter6ServiceImpl.ExceptionTestServiceImpl target = new Chapter6ServiceImpl.ExceptionTestServiceImpl(this.userDao, 2L);
         target.setMailSender(this.mailSender);
 
         ProxyFactoryBean proxyFactoryBean = this.context.getBean("&userServiceWithAdvisor", ProxyFactoryBean.class);
