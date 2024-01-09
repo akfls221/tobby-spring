@@ -5,6 +5,7 @@ import com.example.tobbyspring.basic.chapter6.dynamicproxy.UppercaseHandler;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.junit.jupiter.api.Test;
+import org.springframework.aop.ClassFilter;
 import org.springframework.aop.framework.ProxyFactoryBean;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
@@ -85,6 +86,44 @@ class ProxyTest {
                 () -> assertThat(hello.sayHi("owen")).isEqualTo("HI OWEN"),
                 () -> assertThat(hello.sayThankYou("owen")).isEqualTo("ThankYou owen")
         );
+    }
+
+    @Test
+    void pointCutTest() {
+        NameMatchMethodPointcut classMethodPointcut = new NameMatchMethodPointcut() {
+            public ClassFilter getClassFilter() {
+                return clazz -> clazz.getSimpleName().startsWith("HelloS");
+            }
+        };
+
+        classMethodPointcut.setMappedName("sayH*");
+
+        class HelloSuccess extends HelloTarget{}
+        checkAdviced(new HelloSuccess(), classMethodPointcut, true);
+
+        class HelloFail extends HelloTarget{}
+        checkAdviced(new HelloFail(), classMethodPointcut, false);
+    }
+
+    private void checkAdviced(Object target, NameMatchMethodPointcut classMethodPointcut, boolean adviced) {
+        ProxyFactoryBean proxyFactoryBean = new ProxyFactoryBean();
+        proxyFactoryBean.setTarget(target);
+        proxyFactoryBean.addAdvisor(new DefaultPointcutAdvisor(classMethodPointcut, new UpperCaseAdvice()));
+        Hello proxyHello = (Hello) proxyFactoryBean.getObject();
+
+        if (adviced) {
+            assertAll(
+                    () -> assertThat(proxyHello.sayHello("owen")).isEqualTo("HELLO OWEN"),
+                    () -> assertThat(proxyHello.sayHi("owen")).isEqualTo("HI OWEN"),
+                    () -> assertThat(proxyHello.sayThankYou("owen")).isEqualTo("ThankYou owen")
+            );
+        } else {
+            assertAll(
+                    () -> assertThat(proxyHello.sayHello("owen")).isEqualTo("Hello owen"),
+                    () -> assertThat(proxyHello.sayHi("owen")).isEqualTo("Hi owen"),
+                    () -> assertThat(proxyHello.sayThankYou("owen")).isEqualTo("ThankYou owen")
+            );
+        }
     }
 
     static class UpperCaseAdvice implements MethodInterceptor {
