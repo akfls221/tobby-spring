@@ -1,7 +1,5 @@
 package com.example.tobbyspring.basic.chapter6;
 
-import com.example.tobbyspring.basic.chapter6.Chapter6ServiceImpl;
-import com.example.tobbyspring.basic.chapter6.Chapter6ServiceTxImpl;
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
 import com.example.tobbyspring.entity.Level;
 import com.example.tobbyspring.entity.User;
@@ -21,6 +19,9 @@ class Chapter6UserServiceExceptionTest {
     UserDao userDao;
     @Autowired
     PlatformTransactionManager platformTransactionManager;
+    @Autowired
+    Chapter6Service exceptionService;
+
     @BeforeEach
     void init() {
         User user1 = new User("엄태권1", "3345", Level.BASIC, 50, 10);
@@ -34,10 +35,20 @@ class Chapter6UserServiceExceptionTest {
 
     @Test
     void upgradeAllOrNothing() {
-        Chapter6ServiceImpl.ExceptionTestService exceptionTestService = new Chapter6ServiceImpl.ExceptionTestService(userDao, 2L);
-        Chapter6ServiceTxImpl chapter6ServiceTx = new Chapter6ServiceTxImpl(exceptionTestService, platformTransactionManager);
+        Chapter6ServiceImpl.ExceptionTestServiceImpl exceptionTestServiceImpl = new Chapter6ServiceImpl.ExceptionTestServiceImpl(userDao, 2L);
+        Chapter6ServiceTxImpl chapter6ServiceTx = new Chapter6ServiceTxImpl(exceptionTestServiceImpl, platformTransactionManager);
 
         assertThatThrownBy(chapter6ServiceTx::upgradeLevels)
+                .isInstanceOf(RuntimeException.class);
+
+        assertThat(userDao.getAll())
+                .extracting(User::getLevel)
+                .containsOnly(Level.BASIC);
+    }
+
+    @Test
+    void proxyFactoryBeanCreatorTest() {
+        assertThatThrownBy(this.exceptionService::upgradeLevels)
                 .isInstanceOf(RuntimeException.class);
 
         assertThat(userDao.getAll())
