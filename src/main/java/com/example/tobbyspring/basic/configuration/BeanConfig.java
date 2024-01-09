@@ -3,6 +3,7 @@ package com.example.tobbyspring.basic.configuration;
 import com.example.tobbyspring.basic.chapter6.Chapter6Service;
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceImpl;
 import com.example.tobbyspring.basic.chapter6.Chapter6ServiceTxImpl;
+import com.example.tobbyspring.basic.chapter6.pointcut.NameMatchClassMethodPointcut;
 import com.example.tobbyspring.basic.chapter6.transactionproxy.TransactionAdvice;
 import com.example.tobbyspring.basic.chapter6.transactionproxy.TxProxyFactoryBean;
 import com.example.tobbyspring.basic.chpter5.MockMailSender;
@@ -74,10 +75,15 @@ public class BeanConfig {
 
     @Bean
     public NameMatchMethodPointcut nameMatchMethodPointcut() {
-        NameMatchMethodPointcut nameMatchMethodPointcut = new NameMatchMethodPointcut();
-        nameMatchMethodPointcut.setMappedName("upgrade*");
+        //기존 포인트컷 주석처리
+//        NameMatchMethodPointcut nameMatchMethodPointcut = new NameMatchMethodPointcut();
+//        nameMatchMethodPointcut.setMappedName("upgrade*");
 
-        return nameMatchMethodPointcut;
+        NameMatchClassMethodPointcut newPointCut = new NameMatchClassMethodPointcut();
+        newPointCut.setMappedClassName("*ServiceImpl");
+        newPointCut.setMappedName("upgrade*");
+
+        return newPointCut;
     }
 
     @Bean
