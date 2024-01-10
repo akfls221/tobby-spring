@@ -25,6 +25,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-mail:3.2.1'
+    implementation 'org.aspectj:aspectjtools:1.9.9.1'
+
 
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
