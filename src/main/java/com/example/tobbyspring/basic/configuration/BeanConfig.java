@@ -7,6 +7,7 @@ import com.example.tobbyspring.basic.chapter6.transactionproxy.TransactionAdvice
 import com.example.tobbyspring.basic.chpter5.MockMailSender;
 import com.example.tobbyspring.basic.chpter5.step1.JdbcUserDao;
 import com.example.tobbyspring.basic.chpter5.step1.UserDao;
+import org.springframework.aop.aspectj.AspectJExpressionPointcut;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
@@ -91,9 +92,21 @@ public class BeanConfig {
         return newPointCut;
     }
 
+    /**
+     * execution을 활용한 포인트컷 추가
+     * @return
+     */
+    @Bean
+    public AspectJExpressionPointcut aspectJExpressionPointcut() {
+        AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
+        pointcut.setExpression("execution(* *..*ServiceImpl.upgrade*(..))");
+
+        return pointcut;
+    }
+
     @Bean
     public DefaultPointcutAdvisor defaultPointcutAdvisor() {
-        return new DefaultPointcutAdvisor(nameMatchMethodPointcut(), transactionAdvice());
+        return new DefaultPointcutAdvisor(aspectJExpressionPointcut(), transactionAdvice());
     }
 
 //    @Bean(name = "userServiceWithAdvisor")
