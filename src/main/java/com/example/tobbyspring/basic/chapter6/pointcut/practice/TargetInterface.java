@@ -1,4 +1,4 @@
-package com.example.tobbyspring.basic.chapter6.pointcut.pratice;
+package com.example.tobbyspring.basic.chapter6.pointcut.practice;
 
 public interface TargetInterface {
 
