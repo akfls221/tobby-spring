@@ -37,6 +37,26 @@ public class Chapter6ServiceImpl implements Chapter6Service{
         }
     }
 
+    @Override
+    public User get(Long id) {
+        return this.userDao.get(id);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return this.userDao.getAll();
+    }
+
+    @Override
+    public void deleteAll() {
+        this.userDao.deleteAll();
+    }
+
+    @Override
+    public void update(User user) {
+        this.userDao.update(user);
+    }
+
     protected void upgradeLevel(User user) {
         if (canUpgradeLevel(user)) {
             user.upgradeLevel();
@@ -89,6 +109,14 @@ public class Chapter6ServiceImpl implements Chapter6Service{
                 throw new IllegalArgumentException("error");
             }
             super.upgradeLevel(user);
+        }
+
+        @Override
+        public List<User> getAll() {
+            for (User user : super.getAll()) {
+                super.update(user); //현재 get*에는 읽기 전용 속성이(BeanConfig의 transactionInterceptor() 확인) 걸려있기 때문에 오류가발생함
+            }
+            return null;
         }
     }
 

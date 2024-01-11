@@ -6,6 +6,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class Chapter6ServiceTxImpl implements Chapter6Service{
 
@@ -28,5 +30,25 @@ public class Chapter6ServiceTxImpl implements Chapter6Service{
             this.transactionManager.rollback(transaction);
             throw e;
         }
+    }
+
+    @Override
+    public User get(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<User> getAll() {
+        return null;
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
+    public void update(User user) {
+
     }
 }
