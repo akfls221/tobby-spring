@@ -18,8 +18,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.mail.MailSender;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 public class BeanConfig {
@@ -99,14 +101,22 @@ public class BeanConfig {
     @Bean
     public AspectJExpressionPointcut aspectJExpressionPointcut() {
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-        pointcut.setExpression("execution(* *..*ServiceImpl.upgrade*(..))");
+        pointcut.setExpression("execution(* com.example..*ServiceImpl.*(..))");
 
         return pointcut;
     }
 
+    //이전 transactionAdvice() - methodInterceptor를 활용한 advice등록
+//    @Bean
+//    public DefaultPointcutAdvisor defaultPointcutAdvisor() {
+//        return new DefaultPointcutAdvisor(aspectJExpressionPointcut(), transactionAdvice());
+//    }
+
+
+    //TransactionInterCeptor를 통한 등록
     @Bean
     public DefaultPointcutAdvisor defaultPointcutAdvisor() {
-        return new DefaultPointcutAdvisor(aspectJExpressionPointcut(), transactionAdvice());
+        return new DefaultPointcutAdvisor(aspectJExpressionPointcut(), newTransactionAdvice());
     }
 
 //    @Bean(name = "userServiceWithAdvisor")
@@ -121,5 +131,19 @@ public class BeanConfig {
     @Bean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         return new DefaultAdvisorAutoProxyCreator();
+    }
+
+    @Bean
+    public TransactionInterceptor newTransactionAdvice() {
+        TransactionInterceptor transactionInterceptor = new TransactionInterceptor();
+
+        Properties transactionAttributes = new Properties();
+        transactionAttributes.setProperty("getAll", "readOnly");
+        transactionAttributes.setProperty("update", "");
+
+        transactionInterceptor.setTransactionManager(platformTransactionManager());
+        transactionInterceptor.setTransactionAttributes(transactionAttributes);
+
+        return transactionInterceptor;
     }
 }
