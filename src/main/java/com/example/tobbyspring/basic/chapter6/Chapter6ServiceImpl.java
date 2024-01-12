@@ -7,11 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Transactional
 @RequiredArgsConstructor
 public class Chapter6ServiceImpl implements Chapter6Service{
 
@@ -38,11 +40,13 @@ public class Chapter6ServiceImpl implements Chapter6Service{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User get(Long id) {
         return this.userDao.get(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> getAll() {
         return this.userDao.getAll();
     }
