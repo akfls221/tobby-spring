@@ -8,14 +8,27 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
+/**
+ * h2 데이터 베이스에서 @Transactional(readOnly = true) 가 안먹히는 이유
+ * 참조 : https://ssisksl77.gitlab.io/code-that-talks/220526-spring-transactional-readonly.html
+ *
+ * 책에서는 @TransactionConfiguration 을사용해 클래스 단계에서의 롤백 설정을 기본으로 정하고 롤백이 필요한 곳만 @Rollback을 주면 된다고 하지만
+ * 현재 Spring Framework 4.2부터는 @Rollback클래스 수준에서 transactionManager사용하고있음.
+ *
+ * @TransactionConfiguration은 Deprecated 되었다.
+ *
+ * 참조 : https://docs.spring.io/spring-framework/docs/4.2.0.RC3_to_4.2.0.RELEASE/Spring%20Framework%204.2.0.RELEASE/org/springframework/test/context/transaction/TransactionConfiguration.html
+ */
 @SpringBootTest
-public class TransactionManagerTest {
+@Rollback(value = false)
+class TransactionManagerTest {
 
     @Autowired
     Chapter6Service chapter6ServiceImpl;
@@ -54,7 +67,6 @@ public class TransactionManagerTest {
 
         Assertions.assertThat(userDao.getCount()).isZero();
     }
-
 
     private List<User> createMockUsers() {
         User mockUser = createMockUser();
