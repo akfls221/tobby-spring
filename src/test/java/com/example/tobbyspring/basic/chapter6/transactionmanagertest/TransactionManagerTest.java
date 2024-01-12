@@ -1,12 +1,16 @@
 package com.example.tobbyspring.basic.chapter6.transactionmanagertest;
 
 import com.example.tobbyspring.basic.chapter6.Chapter6Service;
+import com.example.tobbyspring.basic.chpter5.step1.UserDao;
 import com.example.tobbyspring.entity.Level;
 import com.example.tobbyspring.entity.User;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
@@ -19,12 +23,36 @@ public class TransactionManagerTest {
     @Autowired
     PlatformTransactionManager transactionManager;
 
+    @Autowired
+    UserDao userDao;
+
     @Test
     void transactionSync() {
+        DefaultTransactionDefinition txDefinition = new DefaultTransactionDefinition();
+        TransactionStatus transaction = transactionManager.getTransaction(txDefinition);
+
         chapter6ServiceImpl.deleteAll();
 
         chapter6ServiceImpl.add(createMockUsers().get(0));
         chapter6ServiceImpl.add(createMockUsers().get(1));
+
+        transactionManager.commit(transaction);
+    }
+
+    @Test
+    void transactionRollBak() {
+        chapter6ServiceImpl.deleteAll();
+        Assertions.assertThat(userDao.getCount()).isZero();
+
+        DefaultTransactionDefinition txDefinition = new DefaultTransactionDefinition();
+        TransactionStatus transaction = transactionManager.getTransaction(txDefinition);
+
+        chapter6ServiceImpl.add(createMockUsers().get(0));
+        chapter6ServiceImpl.add(createMockUsers().get(1));
+
+        transactionManager.rollback(transaction);
+
+        Assertions.assertThat(userDao.getCount()).isZero();
     }
 
 
