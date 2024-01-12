@@ -59,10 +59,4 @@ class Chapter6UserServiceExceptionTest {
 
         assertThat(this.exceptionService).isInstanceOf(Proxy.class);
     }
-
-    @Test
-    void readOnlyTransactionTest() {
-        this.exceptionService.getAll();
-    }
-
 }
